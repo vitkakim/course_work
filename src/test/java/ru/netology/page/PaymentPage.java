@@ -13,11 +13,11 @@ import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
 
 public class PaymentPage {
-    private SelenideElement cardNumber = $(byText("Номер карты")).parent().$(".input__control");
-    private SelenideElement month = $(byText("Месяц")).parent().$(".input__control");
-    private SelenideElement year = $(byText("Год")).parent().$(".input__control");
-    private SelenideElement owner = $(byText("Владелец")).parent().$(".input__control");
-    private SelenideElement cvc = $(byText("CVC/CVV")).parent().$(".input__control");
+    private SelenideElement cardNumberField = $(byText("Номер карты")).parent().$(".input__control");
+    private SelenideElement monthField = $(byText("Месяц")).parent().$(".input__control");
+    private SelenideElement yearField = $(byText("Год")).parent().$(".input__control");
+    private SelenideElement ownerField = $(byText("Владелец")).parent().$(".input__control");
+    private SelenideElement cvcField = $(byText("CVC/CVV")).parent().$(".input__control");
     private SelenideElement continueButton = $(byText("Продолжить"));
     private SelenideElement cardNumberError = $(byText("Номер карты")).parent().$(".input__sub");
     private SelenideElement monthError = $(byText("Месяц")).parent().$(".input__sub");
@@ -27,11 +27,11 @@ public class PaymentPage {
     private SelenideElement cvcError = $(byText("CVC/CVV")).parent().$(".input__sub");
 
     public void fillForm(DataHelper.CardInfo cardInfo) {
-        cardNumber.setValue(cardInfo.getCardNumber());
-        month.setValue(cardInfo.getMonth());
-        year.setValue(cardInfo.getYear());
-        owner.setValue(cardInfo.getOwner());
-        cvc.setValue(cardInfo.getCardCVC());
+        cardNumberField.setValue(cardInfo.getCardNumber());
+        monthField.setValue(cardInfo.getMonth());
+        yearField.setValue(cardInfo.getYear());
+        ownerField.setValue(cardInfo.getOwner());
+        cvcField.setValue(cardInfo.getCardCVC());
         continueButton.click();
     }
 
@@ -43,51 +43,58 @@ public class PaymentPage {
         cvcError.shouldBe(visible);
     }
 
-    public void cardNumberErrorVisible() {
+    public void cardNumberErrorVisible(String number) {
+        cardNumberField.setValue(number);
         cardNumberError.shouldBe(visible);
     }
 
     public void cardNumberShouldHave(String number) {
-        cardNumber.shouldHave(value(number));
+        cardNumberErrorVisible(number);
+        cardNumberField.shouldHave(value(number));
     }
 
-    public void monthErrorVisible() {
+    public void monthErrorVisible(String month) {
+        monthField.setValue(month);
         monthError.shouldBe(visible);
     }
 
-    public void monthShouldHave(String number) {
-        month.shouldHave(value(number));
+    public void monthShouldHave(String month) {
+        monthErrorVisible(month);
+        monthField.shouldHave(value(month));
     }
 
-    public void yearErrorVisible() {
+    public void yearErrorVisible(String year) {
+        yearField.setValue(year);
         yearError.shouldBe(visible);
     }
 
-    public void yearShouldHave(String number) {
-        year.shouldHave(value(number));
+    public void yearShouldHave(String year) {
+        yearErrorVisible(year);
+        yearField.shouldHave(value(year));
     }
 
-    public void expiredCardErrorVisible() {
-        expiredCardError.shouldBe(visible);
+    public void expiredCardErrorVisible() {expiredCardError.shouldBe(visible);
     }
 
     public void ownerErrorVisible() {
         ownerError.shouldBe(visible);
     }
 
-    public void cvcErrorVisible() {
+    public void cvcErrorVisible(String cvc) {
+        cvcField.setValue(cvc);
         cvcError.shouldBe(visible);
     }
 
-    public void cvcShouldHave(String number) {
-        cvc.shouldHave(value(number));
+    public void cvcShouldHave(String cvc) {
+        cvcErrorVisible(cvc);
+        cvcField.shouldHave(value(cvc));
     }
 
     public void successfulPayment() {
-        $(".notification_status_ok").shouldBe(Condition.visible, Duration.ofSeconds(30));
+        $(".icon_name_ok").shouldBe(Condition.visible, Duration.ofSeconds(30));
     }
 
     public void declinedPayment() {
-        $(byCssSelector("div.notification.notification_status_error.notification_has-closer.notification_stick-to_right.notification_theme_alfa-on-white")).shouldBe(Condition.visible, Duration.ofSeconds(20));
+        $(byCssSelector(".icon_name_error")).shouldBe(Condition.visible, Duration.ofSeconds(20));
     }
 }
