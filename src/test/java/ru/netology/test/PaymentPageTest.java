@@ -30,6 +30,7 @@ public class PaymentPageTest {
     @AfterAll
     static void tearDownAll() {
         SelenideLogger.removeListener("allure");
+        DBUtils.cleanTable();
     }
 
     @Test
@@ -48,7 +49,7 @@ public class PaymentPageTest {
         var cardInfo = DataHelper.Registration.getValidUser();
         payByCard.fillForm(cardInfo);
         payByCard.successfulPayment();
-        assertEquals("APPROVED", DBUtils.getPaymentStatus());
+        assertEquals("APPROVED", DBUtils.getPayment().getStatus());
     }
 
     @Test
@@ -104,7 +105,7 @@ public class PaymentPageTest {
         var paymentPage = mainPage.payByCard();
         var cardInfo = DataHelper.Registration.getAnyCardNumberUser(DataHelper.getOneNumber());
         paymentPage.fillForm(cardInfo);
-        paymentPage.cardNumberErrorVisible(cardInfo.getCardNumber());
+        paymentPage.cardNumberErrorVisible();
     }
 
     //   failed, should pass
@@ -144,7 +145,7 @@ public class PaymentPageTest {
         var digit = DataHelper.getTwoSigns();
         var cardInfo = DataHelper.Registration.getAnyCardNumberUser(cardNumber + digit);
         paymentPage.fillForm(cardInfo);
-        paymentPage.cardNumberShouldHave(digit);
+        paymentPage.cardNumberShouldHave(cardInfo.getCardNumber());
     }
 
     // not pass
@@ -155,7 +156,7 @@ public class PaymentPageTest {
         var letter = DataHelper.getTwoLetter();
         var cardInfo = DataHelper.Registration.getAnyCardNumberUser(cardNumber + letter);
         paymentPage.fillForm(cardInfo);
-        paymentPage.cardNumberShouldHave(letter);
+        paymentPage.cardNumberShouldHave(cardInfo.getCardNumber());
     }
 
     // pass
@@ -164,7 +165,7 @@ public class PaymentPageTest {
         var paymentPage = mainPage.payByCard();
         var cardInfo = DataHelper.Registration.getAnyCardNumberUser(getEmptyField());
         paymentPage.fillForm(cardInfo);
-        paymentPage.cardNumberErrorVisible(cardInfo.getCardNumber());
+        paymentPage.cardNumberErrorVisible();
     }
 
     // pass, should failed
@@ -173,7 +174,7 @@ public class PaymentPageTest {
         var paymentPage = mainPage.payByCard();
         var cardInfo = DataHelper.Registration.getAnyMonthCard(DataHelper.getMonthDoubleZero());
         paymentPage.fillForm(cardInfo);
-        paymentPage.monthErrorVisible(cardInfo.getMonth());
+        paymentPage.monthErrorVisible();
     }
 
     //    pass
@@ -182,7 +183,7 @@ public class PaymentPageTest {
         var paymentPage = mainPage.payByCard();
         var cardInfo = DataHelper.Registration.getAnyMonthCard(DataHelper.getMonthThirteen());
         paymentPage.fillForm(cardInfo);
-        paymentPage.monthErrorVisible(cardInfo.getMonth());
+        paymentPage.monthErrorVisible();
     }
 
     //   pass
@@ -191,7 +192,7 @@ public class PaymentPageTest {
         var paymentPage = mainPage.payByCard();
         var cardInfo = DataHelper.Registration.getAnyMonthCard(DataHelper.getOneNumber());
         paymentPage.fillForm(cardInfo);
-        paymentPage.monthErrorVisible(cardInfo.getMonth());
+        paymentPage.monthErrorVisible();
     }
 
     // failed
@@ -229,7 +230,7 @@ public class PaymentPageTest {
         var paymentPage = mainPage.payByCard();
         var cardInfo = DataHelper.Registration.getAnyMonthCard(getEmptyField());
         paymentPage.fillForm(cardInfo);
-        paymentPage.monthErrorVisible(cardInfo.getMonth());
+        paymentPage.monthErrorVisible();
     }
 
     // pass
@@ -256,7 +257,7 @@ public class PaymentPageTest {
         var paymentPage = mainPage.payByCard();
         var cardInfo = DataHelper.Registration.getAnyYearCard(DataHelper.getOneNumber());
         paymentPage.fillForm(cardInfo);
-        paymentPage.yearErrorVisible(cardInfo.getYear());
+        paymentPage.yearErrorVisible();
     }
 
     //   failed
@@ -294,7 +295,7 @@ public class PaymentPageTest {
         var paymentPage = mainPage.payByCard();
         var cardInfo = DataHelper.Registration.getAnyYearCard(getEmptyField());
         paymentPage.fillForm(cardInfo);
-        paymentPage.yearErrorVisible(cardInfo.getYear());
+        paymentPage.yearErrorVisible();
     }
 
     // pass
@@ -386,7 +387,7 @@ public class PaymentPageTest {
         var paymentPage = mainPage.payByCard();
         var cardInfo = DataHelper.Registration.getAnyCVCCard(DataHelper.getOneNumber());
         paymentPage.fillForm(cardInfo);
-        paymentPage.cvcErrorVisible(cardInfo.getCardCVC());
+        paymentPage.cvcErrorVisible();
     }
 
     // failed
@@ -424,8 +425,6 @@ public class PaymentPageTest {
         var paymentPage = mainPage.payByCard();
         var cardInfo = DataHelper.Registration.getAnyCVCCard(getEmptyField());
         paymentPage.fillForm(cardInfo);
-        paymentPage.cvcErrorVisible(cardInfo.getCardCVC());
+        paymentPage.cvcErrorVisible();
     }
-
-
 }

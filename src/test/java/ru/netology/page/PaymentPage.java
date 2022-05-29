@@ -6,8 +6,7 @@ import ru.netology.data.DataHelper;
 
 import java.time.Duration;
 
-import static com.codeborne.selenide.Condition.value;
-import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selectors.byCssSelector;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
@@ -43,33 +42,30 @@ public class PaymentPage {
         cvcError.shouldBe(visible);
     }
 
-    public void cardNumberErrorVisible(String number) {
-        cardNumberField.setValue(number);
-        cardNumberError.shouldBe(visible);
+    public void cardNumberErrorVisible() {
+        cardNumberError.shouldBe(visible).shouldHave(text("Неверный формат"));
     }
 
     public void cardNumberShouldHave(String number) {
-        cardNumberErrorVisible(number);
+        cardNumberErrorVisible();
         cardNumberField.shouldHave(value(number));
     }
 
-    public void monthErrorVisible(String month) {
-        monthField.setValue(month);
-        monthError.shouldBe(visible);
+    public void monthErrorVisible() {
+        monthError.shouldBe(visible).shouldHave(text("Неверный формат"));
     }
 
     public void monthShouldHave(String month) {
-        monthErrorVisible(month);
+        monthErrorVisible();
         monthField.shouldHave(value(month));
     }
 
-    public void yearErrorVisible(String year) {
-        yearField.setValue(year);
-        yearError.shouldBe(visible);
+    public void yearErrorVisible() {
+        yearError.shouldBe(visible).shouldHave(text("Неверный формат"));
     }
 
     public void yearShouldHave(String year) {
-        yearErrorVisible(year);
+        yearErrorVisible();
         yearField.shouldHave(value(year));
     }
 
@@ -80,13 +76,12 @@ public class PaymentPage {
         ownerError.shouldBe(visible);
     }
 
-    public void cvcErrorVisible(String cvc) {
-        cvcField.setValue(cvc);
-        cvcError.shouldBe(visible);
+    public void cvcErrorVisible() {
+        cvcError.shouldBe(visible).shouldHave(text("Неверный формат"));
     }
 
     public void cvcShouldHave(String cvc) {
-        cvcErrorVisible(cvc);
+        cvcErrorVisible();
         cvcField.shouldHave(value(cvc));
     }
 
