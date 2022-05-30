@@ -49,7 +49,7 @@ public class PaymentPageTest {
         var cardInfo = DataHelper.Registration.getValidUser();
         payByCard.fillForm(cardInfo);
         payByCard.successfulPayment();
-        assertEquals("APPROVED", DBUtils.getPayment().getStatus());
+        assertEquals("APPROVED", DBUtils.getPaymentStatus());
     }
 
     @Test
