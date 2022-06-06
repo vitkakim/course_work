@@ -148,7 +148,7 @@ public class PaymentPageTest {
         paymentPage.cardNumberShouldHave(cardInfo.getCardNumber());
     }
 
-    // not pass
+    // failed
     @Test
     void shouldNotPayByCardWithLetters() {
         var paymentPage = mainPage.payByCard();
@@ -169,6 +169,7 @@ public class PaymentPageTest {
     }
 
     // pass, should failed
+    // bug
     @Test
     void shouldNotPayWithMonthWithNulls() {
         var paymentPage = mainPage.payByCard();
@@ -308,6 +309,7 @@ public class PaymentPageTest {
     }
 
     // failed, should pass
+    // bug
     @Test
     void shouldNotPayWithNameInRussian() {
         var paymentPage = mainPage.payByCard();
@@ -317,6 +319,7 @@ public class PaymentPageTest {
     }
 
     // failed, should pass
+    // bug
     @Test
     void shouldNotPayWithOneLetter() {
         var paymentPage = mainPage.payByCard();
@@ -344,6 +347,7 @@ public class PaymentPageTest {
     }
 
     // failed, should pass
+    // bug
     @Test
     void shouldNotPayWithNameWithDigits() {
         var paymentPage = mainPage.payByCard();
@@ -353,6 +357,7 @@ public class PaymentPageTest {
     }
 
     // failed, should pass
+    // bug
     @Test
     void shouldNotPayWithNameOnlyWithSigns() {
         var paymentPage = mainPage.payByCard();
@@ -362,6 +367,7 @@ public class PaymentPageTest {
     }
 
     // failed, should pass
+    // bug
     @Test
     void shouldNotPayWithNameWithSigns() {
         var paymentPage = mainPage.payByCard();
@@ -420,6 +426,7 @@ public class PaymentPageTest {
     }
 
     //  pass
+    // bug
     @Test
     void shouldNotPayWithoutCVC() {
         var paymentPage = mainPage.payByCard();

@@ -5,9 +5,12 @@
 ### Документы
 
 * [План автоматизации](documents/Plan.md)
+* [Отчет по итогам тестирования](documents/Report.md)
+* [Отчет по итогам автоматизации](documents/Summary.md)
 
 ### Установка и запуск
 
 1. Запустить Docker - в терминале ввести команду `docker-compose up -d`
 2. Запустить файл JAR-файл - в терминале ввести команду `java -jar artifacts/aqa-shop.jar`
 3. Запуск тестов `gradlew clean test`
+4. Для генерации отчета после прохождения тестов `gradlew allureReport`. Отчет после выполнения: `..\build\reports\allure-report\allureReport\index.html`
